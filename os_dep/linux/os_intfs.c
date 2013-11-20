@@ -316,6 +316,38 @@ static int	rtw_proc_cnt = 0;
 
 #define RTW_PROC_NAME DRV_NAME
 
+#if(LINUX_VERSION_CODE >= KERNEL_VERSION(3,10,0))
+typedef ssize_t (*read_proc_t) (struct file *, char __user *, ssize_t, loff_t *);
+static inline struct proc_dir_entry *create_proc_read_entry(const char *name,
+        mode_t mode, struct proc_dir_entry *base,
+        read_proc_t *read_proc, void * data)
+{
+	struct file_operations fops = {
+		read: read_proc
+	};
+	struct proc_dir_entry *res = proc_create(name, mode, base, &fops);
+	//if (res) {
+	//	res->data = data;
+	//}
+	return res;
+}
+typedef ssize_t (*write_proc_t) (struct file *, const char __user *, ssize_t, loff_t *);
+static inline struct proc_dir_entry *create_proc_read_write_entry(const char *name,
+        mode_t mode, struct proc_dir_entry *base,
+        read_proc_t *read_proc, void * data, write_proc_t *write_proc)
+{
+	struct file_operations fops = {
+		read: read_proc,
+		write: write_proc
+	};
+	struct proc_dir_entry *res = proc_create(name, mode, base, &fops);
+	//if (res) {
+	//	res->data = data;
+	//}
+	return res;
+}
+#endif
+
 void rtw_proc_init_one(struct net_device *dev)
 {
 	struct proc_dir_entry *dir_dev = NULL;
@@ -348,8 +380,10 @@ void rtw_proc_init_one(struct net_device *dev)
 
 #if(LINUX_VERSION_CODE < KERNEL_VERSION(2,6,24))
 		rtw_proc=create_proc_entry(rtw_proc_name, S_IFDIR, proc_net);
-#else
+#elif(LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0))
 		rtw_proc=create_proc_entry(rtw_proc_name, S_IFDIR, init_net.proc_net);
+#else
+		rtw_proc=proc_create(rtw_proc_name, S_IFDIR, init_net.proc_net, NULL);
 #endif
 		if (rtw_proc == NULL) {
 			DBG_871X(KERN_ERR "Unable to create rtw_proc directory\n");
@@ -367,9 +401,15 @@ void rtw_proc_init_one(struct net_device *dev)
 
 	if(padapter->dir_dev == NULL)
 	{
+#if(LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0))
 		padapter->dir_dev = create_proc_entry(dev->name,
 					  S_IFDIR | S_IRUGO | S_IXUGO,
 					  rtw_proc);
+#else
+		padapter->dir_dev = proc_create(dev->name,
+					  S_IFDIR | S_IRUGO | S_IXUGO,
+					  rtw_proc, NULL);
+#endif
 
 		dir_dev = padapter->dir_dev;
 
@@ -398,22 +438,19 @@ void rtw_proc_init_one(struct net_device *dev)
 
 	rtw_proc_cnt++;
 
-	entry = create_proc_read_entry("write_reg", S_IFREG | S_IRUGO,
-				   dir_dev, proc_get_write_reg, dev);
+	entry = create_proc_read_write_entry("write_reg", S_IFREG | S_IRUGO,
+				   dir_dev, proc_get_write_reg, dev, proc_set_write_reg);
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
 		return;
 	}
-	entry->write_proc = proc_set_write_reg;
 
-	entry = create_proc_read_entry("read_reg", S_IFREG | S_IRUGO,
-				   dir_dev, proc_get_read_reg, dev);
+	entry = create_proc_read_write_entry("read_reg", S_IFREG | S_IRUGO,
+				   dir_dev, proc_get_read_reg, dev, proc_set_read_reg);
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
 		return;
 	}
-	entry->write_proc = proc_set_read_reg;
-
 
 	entry = create_proc_read_entry("fwstate", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_fwstate, dev);
@@ -422,7 +459,6 @@ void rtw_proc_init_one(struct net_device *dev)
 		return;
 	}
 
-
 	entry = create_proc_read_entry("sec_info", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_sec_info, dev);
 	if (!entry) {
@@ -430,14 +466,12 @@ void rtw_proc_init_one(struct net_device *dev)
 		return;
 	}
 
-
 	entry = create_proc_read_entry("mlmext_state", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_mlmext_state, dev);
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
 		return;
 	}
-
 
 	entry = create_proc_read_entry("qos_option", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_qos_option, dev);
@@ -582,75 +616,67 @@ void rtw_proc_init_one(struct net_device *dev)
 	}
 #endif
 
-	entry = create_proc_read_entry("rx_signal", S_IFREG | S_IRUGO,
-				   dir_dev, proc_get_rx_signal, dev);
+	entry = create_proc_read_write_entry("rx_signal", S_IFREG | S_IRUGO,
+				   dir_dev, proc_get_rx_signal, dev, proc_set_rx_signal);
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
 		return;
 	}
-	entry->write_proc = proc_set_rx_signal;
 #ifdef CONFIG_80211N_HT
-	entry = create_proc_read_entry("ht_enable", S_IFREG | S_IRUGO,
-				   dir_dev, proc_get_ht_enable, dev);
+	entry = create_proc_read_write_entry("ht_enable", S_IFREG | S_IRUGO,
+				   dir_dev, proc_get_ht_enable, dev, proc_set_ht_enable);
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
 		return;
 	}
-	entry->write_proc = proc_set_ht_enable;
 
-	entry = create_proc_read_entry("bw_mode", S_IFREG | S_IRUGO,
-				   dir_dev, proc_get_bw_mode, dev);
+	entry = create_proc_read_write_entry("bw_mode", S_IFREG | S_IRUGO,
+				   dir_dev, proc_get_bw_mode, dev, proc_set_bw_mode);
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
 		return;
 	}
-	entry->write_proc = proc_set_bw_mode;
 
-	entry = create_proc_read_entry("ampdu_enable", S_IFREG | S_IRUGO,
-				   dir_dev, proc_get_ampdu_enable, dev);
+	entry = create_proc_read_write_entry("ampdu_enable", S_IFREG | S_IRUGO,
+				   dir_dev, proc_get_ampdu_enable, dev, proc_set_ampdu_enable);
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
 		return;
 	}
-	entry->write_proc = proc_set_ampdu_enable;
 
-	entry = create_proc_read_entry("rx_stbc", S_IFREG | S_IRUGO,
-				   dir_dev, proc_get_rx_stbc, dev);
+	entry = create_proc_read_write_entry("rx_stbc", S_IFREG | S_IRUGO,
+				   dir_dev, proc_get_rx_stbc, dev, proc_set_rx_stbc);
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
 		return;
 	}
-	entry->write_proc = proc_set_rx_stbc;
 #endif //CONFIG_80211N_HT
 
 	entry = create_proc_read_entry("path_rssi", S_IFREG | S_IRUGO,
 					dir_dev, proc_get_two_path_rssi, dev);
 
-	entry = create_proc_read_entry("rssi_disp", S_IFREG | S_IRUGO,
-				   dir_dev, proc_get_rssi_disp, dev);
+	entry = create_proc_read_write_entry("rssi_disp", S_IFREG | S_IRUGO,
+				   dir_dev, proc_get_rssi_disp, dev, proc_set_rssi_disp);
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
 		return;
 	}
-	entry->write_proc = proc_set_rssi_disp;
 #ifdef CONFIG_BT_COEXIST
-	entry = create_proc_read_entry("btcoex_dbg", S_IFREG | S_IRUGO,
-				   dir_dev, proc_get_btcoex_dbg, dev);
+	entry = create_proc_read_write_entry("btcoex_dbg", S_IFREG | S_IRUGO,
+				   dir_dev, proc_get_btcoex_dbg, dev, proc_set_btcoex_dbg);
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
 		return;
 	}
-	entry->write_proc = proc_set_btcoex_dbg;
 #endif /*CONFIG_BT_COEXIST*/
 
 #if defined(DBG_CONFIG_ERROR_DETECT)
-	entry = create_proc_read_entry("sreset", S_IFREG | S_IRUGO,
-				   dir_dev, proc_get_sreset, dev);
+	entry = create_proc_read_write_entry("sreset", S_IFREG | S_IRUGO,
+				   dir_dev, proc_get_sreset, dev, proc_set_sreset);
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
 		return;
 	}
-	entry->write_proc = proc_set_sreset;
 #endif /* DBG_CONFIG_ERROR_DETECT */
 
 }
