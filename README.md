@@ -18,9 +18,9 @@ functions in favor of the new `proc_create()` function.
 The driver is build by running `make`, and can be tested by loading the
 built module using `insmod`:
 
-```
-make
-sudo insmod 8812au.ko
+```sh
+$ make
+$ sudo insmod 8812au.ko
 ```
 
 After loading the module, a wireless network interface named __Realtek 802.11n WLAN Adapter__ should be available.
@@ -30,9 +30,9 @@ After loading the module, a wireless network interface named __Realtek 802.11n W
 Installing the driver is simply a matter of copying the built module
 into the correct location and updating module dependencies using `depmod`:
 
-```
-sudo 8812au.ko /lib/modules/$(uname -r)/kernel/drivers/net/wireless
-sudo depmod
+```sh
+$ sudo 8812au.ko /lib/modules/$(uname -r)/kernel/drivers/net/wireless
+$ sudo depmod
 ```
 
 The driver module should now be loaded automatically.
