@@ -8,21 +8,34 @@ driver altered to build on Linux kernel version >= 3.10.
 My D-Link DWA-171 wireless dual-band USB adapter needs the Realtek 8812au
 driver to work under Linux.
 
-The current rtl8812au version (per nov. 20th 2013) doesn't compile on Linux 
-kernels >= 3.10 due to a change in the proc entry API, specifically the 
-deprecation of the `create_proc_entry()` and `create_proc_read_entry()` 
+The current rtl8812au version (per nov. 20th 2013) doesn't compile on Linux
+kernels >= 3.10 due to a change in the proc entry API, specifically the
+deprecation of the `create_proc_entry()` and `create_proc_read_entry()`
 functions in favor of the new `proc_create()` function.
 
-### Usage
+### Building
+
+The driver is build by running `make`, and can be tested by loading the
+built module using `insmod`:
 
 ```
-git clone https://github.com/gnab/rtl8812au
-cd rtl8812au
 make
 sudo insmod 8812au.ko
 ```
 
 After loading the module, a wireless network interface named __Realtek 802.11n WLAN Adapter__ should be available.
+
+### Installing
+
+Installing the driver is simply a matter of copying the built module
+into the correct location and updating module dependencies using `depmod`:
+
+```
+sudo 8812au.ko /lib/modules/$(uname -r)/kernel/drivers/net/wireless
+sudo depmod
+```
+
+The driver module should now be loaded automatically.
 
 ### References
 
