@@ -323,12 +323,10 @@ static inline struct proc_dir_entry *create_proc_read_entry(const char *name,
         read_proc_t *read_proc, void * data)
 {
 	struct file_operations fops = {
+		owner: THIS_MODULE,
 		read: read_proc
 	};
-	struct proc_dir_entry *res = proc_create(name, mode, base, &fops);
-	//if (res) {
-	//	res->data = data;
-	//}
+	struct proc_dir_entry *res = proc_create_data(name, mode, base, &fops, data);
 	return res;
 }
 typedef ssize_t (*write_proc_t) (struct file *, const char __user *, ssize_t, loff_t *);
@@ -337,13 +335,11 @@ static inline struct proc_dir_entry *create_proc_read_write_entry(const char *na
         read_proc_t *read_proc, void * data, write_proc_t *write_proc)
 {
 	struct file_operations fops = {
+		owner: THIS_MODULE,
 		read: read_proc,
 		write: write_proc
 	};
-	struct proc_dir_entry *res = proc_create(name, mode, base, &fops);
-	//if (res) {
-	//	res->data = data;
-	//}
+	struct proc_dir_entry *res = proc_create_data(name, mode, base, &fops, data);
 	return res;
 }
 #endif
@@ -805,7 +801,7 @@ _func_enter_;
 		&& (registry_par->channel <= 14)) {
 		registry_par->channel = 36;
 	}
-	
+
 	registry_par->vrtl_carrier_sense = (u8)rtw_vrtl_carrier_sense ;
 	registry_par->vcs_type = (u8)rtw_vcs_type;
 	registry_par->rts_thresh=(u16)rtw_rts_thresh;
@@ -2160,7 +2156,7 @@ static const struct net_device_ops rtw_netdev_if2_ops = {
 };
 #endif
 
-_adapter *rtw_drv_if2_init(_adapter *primary_padapter, 
+_adapter *rtw_drv_if2_init(_adapter *primary_padapter,
 	void (*set_intf_ops)(_adapter *primary_padapter,struct _io_ops *pops))
 {
 	int res = _FAIL;
