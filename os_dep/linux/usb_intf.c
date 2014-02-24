@@ -273,6 +273,7 @@ static struct usb_device_id rtw_usb_id_tbl[] ={
 	{USB_DEVICE(0x07B8, 0x8812),.driver_info = RTL8812}, /* Abocom - Abocom */
 	{USB_DEVICE(0x2001, 0x3315),.driver_info = RTL8812}, /* D-Link - Cameo */
 	{USB_DEVICE(0x2001, 0x3316),.driver_info = RTL8812}, /* D-Link - Cameo */
+	{USB_DEVICE(0x20f4, 0x805b),.driver_info = RTL8812}, /* TRENDnet - */
 #endif
 
 #ifdef CONFIG_RTL8821A
