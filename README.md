@@ -31,7 +31,7 @@ Installing the driver is simply a matter of copying the built module
 into the correct location and updating module dependencies using `depmod`:
 
 ```sh
-$ sudo 8812au.ko /lib/modules/$(uname -r)/kernel/drivers/net/wireless
+$ sudo cp 8812au.ko /lib/modules/$(uname -r)/kernel/drivers/net/wireless
 $ sudo depmod
 ```
 
