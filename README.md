@@ -15,7 +15,7 @@ functions in favor of the new `proc_create()` function.
 
 ### Building
 
-The driver is build by running `make`, and can be tested by loading the
+The driver is built by running `make`, and can be tested by loading the
 built module using `insmod`:
 
 ```sh
