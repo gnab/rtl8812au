@@ -55,6 +55,7 @@ CONFIG_PLATFORM_JB_X86 = n
 CONFIG_PLATFORM_ARM_S3C2K4 = n
 CONFIG_PLATFORM_ARM_PXA2XX = n
 CONFIG_PLATFORM_ARM_S3C6K4 = n
+CONFIG_PLATFORM_ARM_RPI = n
 CONFIG_PLATFORM_MIPS_RMI = n
 CONFIG_PLATFORM_RTD2880B = n
 CONFIG_PLATFORM_MIPS_AR9132 = n
@@ -726,6 +727,15 @@ ARCH := arm
 CROSS_COMPILE := arm-none-linux-gnueabi-
 KVER  := 2.6.34.1
 KSRC ?= /usr/src/linux-2.6.34.1
+endif
+
+ifeq ($(CONFIG_PLATFORM_ARM_RPI), y)
+EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN
+ARCH := arm
+CROSS_COMPILE := arm-linux-gnueabi-
+KVER  := $(shell uname -r)
+KSRC ?= /home/tm-pc-vm1x64/GitHub/linux
+MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/
 endif
 
 ifeq ($(CONFIG_PLATFORM_RTD2880B), y)
