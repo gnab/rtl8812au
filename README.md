@@ -15,6 +15,16 @@ functions in favor of the new `proc_create()` function.
 
 ### Building
 
+The Makefile is preconfigured to handle most x86/PC versions.  If you are compiling for something other than an intel x86 architecture, you need to first select the platform, e.g. for the Raspberry Pi, you need to set the I386 to n and the ARM_RPI to y:
+```sh
+...
+CONFIG_PLATFORM_I386_PC = n
+...
+CONFIG_PLATFORM_ARM_RPI = y
+```
+
+There are many other platforms supported and some other advanced options, e.g. PCI instead of USB, but most won't be needed.
+
 The driver is built by running `make`, and can be tested by loading the
 built module using `insmod`:
 
