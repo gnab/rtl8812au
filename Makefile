@@ -653,7 +653,7 @@ ARCH ?= $(SUBARCH)
 CROSS_COMPILE ?=
 KVER  := $(shell uname -r)
 KSRC := /lib/modules/$(KVER)/build
-MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/
+MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/rtlwifi/rtl8812au/
 INSTALL_PREFIX :=
 endif
 
@@ -734,8 +734,8 @@ EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN
 ARCH := arm
 CROSS_COMPILE := arm-linux-gnueabi-
 KVER  := $(shell uname -r)
-KSRC ?= /home/tm-pc-vm1x64/GitHub/linux
-MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/
+KSRC ?= /lib/modules/$(KVER)/build
+MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/rtlwifi/rtl8812au/
 endif
 
 ifeq ($(CONFIG_PLATFORM_RTD2880B), y)
