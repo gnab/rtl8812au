@@ -732,9 +732,9 @@ endif
 ifeq ($(CONFIG_PLATFORM_ARM_RPI), y)
 EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN
 ARCH := arm
-CROSS_COMPILE := arm-linux-gnueabi-
+CROSS_COMPILE := 
 KVER  := $(shell uname -r)
-KSRC ?= /home/tm-pc-vm1x64/GitHub/linux
+KSRC ?= /lib/modules/$(KVER)/build
 MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/
 endif
 
