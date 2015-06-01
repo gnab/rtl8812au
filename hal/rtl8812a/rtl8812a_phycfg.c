@@ -915,7 +915,7 @@ PHY_ConvertPowerLimitToPowerIndex(
 					else
 						channel = 51; // index of chnl 173 in chanl5G
 						
-					for ( rateSection = 0; rateSection < MAX_5G_RATE_SECTION_NUM; ++rateSection )
+					for ( rateSection = 1; rateSection < MAX_5G_RATE_SECTION_NUM; ++rateSection )
 					{	
 						if ( pHalData->odmpriv.PhyRegPgValueType == PHY_REG_PG_EXACT_VALUE ) {
 							// obtain the base dBm values in 5G band
