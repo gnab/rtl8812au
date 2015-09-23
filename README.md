@@ -47,6 +47,33 @@ $ sudo depmod
 
 The driver module should now be loaded automatically.
 
+### DKMS
+
+Automatically rebuilds and installs on kernel updates. DKMS is in official sources of Ubuntu, for installation do:
+
+```sh
+$ sudo apt-get install build-essential dkms 
+```
+
+The driver source mus be copied to /usr/src/8812au-4.2.2
+
+Then add it to DKMS:
+
+```sh
+$ sudo dkms add -m 8812au -v 4.2.2
+$ sudo dkms build -m 8812au -v 4.2.2
+$ sudo dkms install -m 8812au -v 4.2.2
+```
+
+Check with:
+```sh
+$ sudo dkms status
+```
+Eventually remove from DKMS with:
+```sh
+$ sudo dkms remove -m 8812au -v 4.2.2 --all
+```
+
 ### References
 
 - D-Link DWA-171
