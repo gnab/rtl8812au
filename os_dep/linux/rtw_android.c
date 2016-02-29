@@ -549,7 +549,7 @@ int rtw_android_priv_cmd(struct net_device *net, struct ifreq *ifr, int cmd)
 	
 		pwfd_info = &padapter->wfd_info;
 		if( padapter->wdinfo.driver_interface == DRIVER_CFG80211 )
-			pwfd_info->rtsp_ctrlport = ( u16 ) get_int_from_command( priv_cmd.buf );
+			pwfd_info->rtsp_ctrlport = ( u16 ) get_int_from_command( (char*)priv_cmd.buf );
 		break;
 	}
 	case ANDROID_WIFI_CMD_WFD_SET_MAX_TPUT:
@@ -569,7 +569,7 @@ int rtw_android_priv_cmd(struct net_device *net, struct ifreq *ifr, int cmd)
 		pwfd_info = &padapter->wfd_info;
 		if( padapter->wdinfo.driver_interface == DRIVER_CFG80211 )
 		{
-			pwfd_info->wfd_device_type = ( u8 ) get_int_from_command( priv_cmd.buf );
+			pwfd_info->wfd_device_type = ( u8 ) get_int_from_command( (char*)priv_cmd.buf );
 		
 			pwfd_info->wfd_device_type &= WFD_DEVINFO_DUAL;
 		}

@@ -15,6 +15,7 @@ EXTRA_CFLAGS += -Wno-unused-function
 EXTRA_CFLAGS += -Wno-unused
 
 EXTRA_CFLAGS += -Wno-uninitialized
+EXTRA_CFLAGS += -Wno-int-to-pointer-cast
 
 EXTRA_CFLAGS += -I$(src)/include
 
