@@ -337,11 +337,7 @@ struct led_priv{
 };
 
 #ifdef CONFIG_SW_LED
-#define rtw_led_control(adapter, LedAction) \
-	do { \
-		if((adapter)->ledpriv.LedControlHandler) \
-			(adapter)->ledpriv.LedControlHandler((adapter), (LedAction)); \
-	} while(0)
+void rtw_led_control(_adapter *adapter, LED_CTL_MODE LedAction);
 #else //CONFIG_SW_LED
 #define rtw_led_control(adapter, LedAction)
 #endif //CONFIG_SW_LED
