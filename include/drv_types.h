@@ -309,6 +309,10 @@ struct registry_priv
 #ifdef CONFIG_MULTI_VIR_IFACES
 	u8 ext_iface_num;//primary/secondary iface is excluded
 #endif
+
+#ifdef CONFIG_SW_LED
+    u8 led_enable;
+#endif
 };
 
 
