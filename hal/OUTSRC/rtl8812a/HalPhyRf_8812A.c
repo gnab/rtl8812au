@@ -1404,7 +1404,7 @@ void _IQK_Tx_8812A(
 			if (TX1IQKOK == FALSE)
 			    	break;				// TXK fail, Don't do RXK
 			
-				if (VDF_enable == 1){
+			if (VDF_enable == 1){
 				ODM_SetBBReg(pDM_Odm, 0xee8, BIT(31), 0x0);    // TX VDF Disable
 				ODM_RT_TRACE(pDM_Odm, ODM_COMP_CALIBRATION, ODM_DBG_LOUD, ("RXVDF Start\n"));
 				
