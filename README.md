@@ -55,7 +55,7 @@ Automatically rebuilds and installs on kernel updates. DKMS is in official sourc
 $ sudo apt-get install build-essential dkms 
 ```
 
-The driver source mus be copied to /usr/src/8812au-4.2.2
+The driver source must be copied to /usr/src/8812au-4.2.2
 
 Then add it to DKMS:
 
