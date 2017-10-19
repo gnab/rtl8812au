@@ -5,7 +5,7 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-apt install build-essential bc git wget
+sudo apt install build-essential bc git wget
 
 cd /usr/src
 
@@ -22,9 +22,22 @@ make bcm2709_defconfig
 make prepare
 make modules_prepare
 
-make &&
-cp 8812au.ko /lib/modules/$(uname -r)/kernel/drivers/net/wireless &&
-depmod &&
+sudo wget "https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source" -O /usr/bin/rpi-source
+sudo chmod 755 /usr/bin/rpi-source
+rpi-source --skip-gcc
+
+git clone "https://github.com/gnab/rtl8812au"
+cd rtl8812au
+
+sed -i 's/CONFIG_PLATFORM_I386_PC = y/CONFIG_PLATFORM_I386_PC = n/g' Makefile
+sed -i 's/CONFIG_PLATFORM_ARM_RPI = n/CONFIG_PLATFORM_ARM_RPI = y/g' Makefile
+
+make
+
+sudo cp 8812au.ko /lib/modules/`uname -r`/kernel/drivers/net/wireless
+sudo depmod -a
+sudo modprobe 8812au
+
 echo "
                        ***Success***
 ***Module will be activated automatically at next reboot***
