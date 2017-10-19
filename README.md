@@ -46,7 +46,7 @@ CONFIG_PLATFORM_ARM_RPI = y
 ```
 # sudo wget "https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source" -O /usr/bin/rpi-source
 # sudo chmod 755 /usr/bin/rpi-source
-# rpi-source
+# rpi-source --skip-gcc
 
 ```
 
