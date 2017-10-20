@@ -60,7 +60,7 @@ After loading the module, a wireless network interface named __Realtek 802.11n W
 ```
 
 ```
-# # copy the driver and use it
+# copy the driver and use it
 # sudo cp 8812au.ko /lib/modules/`uname -r`/kernel/drivers/net/wireless
 # sudo depmod -a
 # sudo modprobe 8812au
