@@ -68,7 +68,7 @@ After loading the module, a wireless network interface named __Realtek 802.11n W
 ```
 
 ```
-# check wlan0 interface appeared
+check wlan0 interface appeared
 # ifconfig
 # iwconfig
 ```
