@@ -18,9 +18,7 @@ cd linux
 wget -O Module.symvers https://raw.githubusercontent.com/raspberrypi/firmware/master/extra/Module7.symvers
 KERNEL=kernel7
 
-make bcm2709_defconfig
-make prepare
-make modules_prepare
+make bcm2709_defconfig && make prepare && make modules_prepare
 
 sudo wget "https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source" -O /usr/bin/rpi-source
 sudo chmod 755 /usr/bin/rpi-source
