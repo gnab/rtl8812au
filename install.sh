@@ -1,5 +1,4 @@
 #!/bin/bash
-
 function vefificaRoot(){
     if [ "$(id -u)" != "0" ]; then
     echo "This script must be run as root" 1>&2
@@ -25,8 +24,11 @@ function configure(){
     wget -O Module.symvers https://raw.githubusercontent.com/raspberrypi/firmware/master/extra/Module7.symvers
     KERNEL=kernel7
 
-    make bcm2709_defconfig && make prepare && make modules_prepare
+    #make bcm2709_defconfig && make prepare && make modules_prepare
 
+    for mak in bcm2709 prepare modules_prepare; do
+        make $mak
+    
     sudo wget "https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source" -O /usr/bin/rpi-source
     sudo chmod 755 /usr/bin/rpi-source
     rpi-source --skip-gcc
@@ -40,8 +42,7 @@ function configure(){
     make
 
     sudo cp 8812au.ko /lib/modules/`uname -r`/kernel/drivers/net/wireless
-    sudo depmod -a
-    sudo modprobe 8812au
+    sudo depmod -a && sudo modprobe 8812au
 
     echo "
                            ***Success***
