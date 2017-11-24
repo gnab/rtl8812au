@@ -23,59 +23,52 @@ CONFIG_PLATFORM_I386_PC = n
 CONFIG_PLATFORM_ARM_RPI = y
 ```
 
-There are many other platforms supported and some other advanced options, e.g. PCI instead of USB, but most won't be needed.
-
-The driver is built by running `make`, and can be tested by loading the
-built module using `insmod`:
 
 ```sh
-$ make
-$ sudo insmod 8812au.ko
+# apt install build-essential bc git wget
+# cd /usr/src
+# git clone --depth 1 https://github.com/raspberrypi/linux.git
+# ln -s linux $(uname -r)
+# ln -s /usr/src/linux /lib/modules/$(uname -r)/build
+```
+
+
+```sh
+# cd linux
+# wget -O Module.symvers https://raw.githubusercontent.com/raspberrypi/firmware/master/extra/Module7.symvers
+# KERNEL=kernel7
+# make bcm2709_defconfig
+# make prepare
+# make modules_prepare
+```
+
+### Download Kernel soucers
+```
+# sudo wget "https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source" -O /usr/bin/rpi-source
+# sudo chmod 755 /usr/bin/rpi-source
+# rpi-source --skip-gcc
+
 ```
 
 After loading the module, a wireless network interface named __Realtek 802.11n WLAN Adapter__ should be available.
 
-### Installing
-
-Installing the driver is simply a matter of copying the built module
-into the correct location and updating module dependencies using `depmod`:
-
-```sh
-$ sudo cp 8812au.ko /lib/modules/$(uname -r)/kernel/drivers/net/wireless
-$ sudo depmod
+```
+# # download the rtl8812au kernel driver and compile it, takes some minutes
+# git clone "https://github.com/gnab/rtl8812au"
+# cd rtl8812au
+# make
 ```
 
-The driver module should now be loaded automatically.
+```
+# copy the driver and use it
+# sudo cp 8812au.ko /lib/modules/`uname -r`/kernel/drivers/net/wireless
+# sudo depmod -a
+# sudo modprobe 8812au
 
-### DKMS
-
-Automatically rebuilds and installs on kernel updates. DKMS is in official sources of Ubuntu, for installation do:
-
-```sh
-$ sudo apt-get install build-essential dkms 
 ```
 
-The driver source must be copied to /usr/src/8812au-4.2.2
-
-Then add it to DKMS:
-
-```sh
-$ sudo dkms add -m 8812au -v 4.2.2
-$ sudo dkms build -m 8812au -v 4.2.2
-$ sudo dkms install -m 8812au -v 4.2.2
 ```
-
-Check with:
-```sh
-$ sudo dkms status
+check wlan0 interface appeared
+# ifconfig
+# iwconfig
 ```
-Eventually remove from DKMS with:
-```sh
-$ sudo dkms remove -m 8812au -v 4.2.2 --all
-```
-
-### References
-
-- D-Link DWA-171
-  - [D-Link page](http://www.dlink.com/no/nb/home-solutions/connect/adapters/dwa-171-wireless-ac-dual-band-usb-adapter)
-  - [wikidevi page](http://wikidevi.com/wiki/D-Link_DWA-171_rev_A1)
