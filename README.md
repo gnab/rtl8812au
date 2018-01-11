@@ -69,6 +69,10 @@ Check with:
 ```sh
 $ sudo dkms status
 ```
+Automatically load at boot:
+```sh
+$ echo 8812au | sudo tee -a /etc/modules
+```
 Eventually remove from DKMS with:
 ```sh
 $ sudo dkms remove -m 8812au -v 4.2.2 --all
