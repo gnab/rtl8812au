@@ -299,6 +299,7 @@ static struct usb_device_id rtw_usb_id_tbl[] ={
 	{USB_DEVICE(0x056E, 0x4007),.driver_info = RTL8821}, /* ELECOM - WDC-433DU2H */
 	{USB_DEVICE(0x04BB, 0x0953),.driver_info = RTL8821}, /* I-O DATA - WN-AC433UA */
 	{USB_DEVICE(0x0BDA, 0xA811),.driver_info = RTL8821}, /* GMYLE - AC450 */
+	{USB_DEVICE(0x2001, 0x3318),.driver_info = RTL8821}, /* D-Link - DWA-172 */
 #endif
 
 #ifdef CONFIG_RTL8192E
