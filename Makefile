@@ -84,6 +84,7 @@ CONFIG_PLATFORM_ARM_SUNxI = n
 CONFIG_PLATFORM_ARM_SUN6I = n
 CONFIG_PLATFORM_ACTIONS_ATM702X = n
 CONFIG_PLATFORM_ACTIONS_ATV5201 = n
+CONFIG_PLATFORM_PPC = n
 
 CONFIG_DRVEXT_MODULE = n
 
@@ -969,6 +970,17 @@ ARCH := mips
 CROSS_COMPILE := mipsel-linux-gnu-
 KVER := $(KERNEL_VER)
 KSRC:= $(CFGDIR)/../../kernel/linux-$(KERNEL_VER)
+endif
+
+ifeq ($(CONFIG_PLATFORM_PPC), y)
+EXTRA_CFLAGS += -DCONFIG_BIG_ENDIAN
+SUBARCH := $(shell uname -m | sed -e s/ppc/powerpc/)
+ARCH ?= $(SUBARCH)
+CROSS_COMPILE ?=
+KVER ?= $(shell uname -r)
+KSRC := /lib/modules/$(KVER)/build
+MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/
+INSTALL_PREFIX :=
 endif
 
 
