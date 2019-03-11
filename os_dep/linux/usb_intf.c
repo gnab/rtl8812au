@@ -280,6 +280,7 @@ static struct usb_device_id rtw_usb_id_tbl[] ={
 	{USB_DEVICE(0x2357, 0x0103),.driver_info = RTL8812}, /* TP-Link - Archer T4UH(US), AC1200 */
 	{USB_DEVICE(0x2357, 0x010d),.driver_info = RTL8812}, /* TP-Link - Archer T4U, AC1300 */
 	{USB_DEVICE(0x2357, 0x010e),.driver_info = RTL8812}, /* TP-Link - Archer T4UH, AC1300 */
+	{USB_DEVICE(0x2357, 0x0122),.driver_info = RTL8812}, /* TP-Link - Archer T4UHP, AC1300 */
 	{USB_DEVICE(0x0411, 0x025d),.driver_info = RTL8812}, /* Buffalo - WI-U3-866D */
 	{USB_DEVICE(0x0bda, 0x8812),.driver_info = RTL8812}, /* Netis WF2190 */
 	{USB_DEVICE(0x2604, 0x0012),.driver_info = RTL8812}, /* Tenda U12 */
