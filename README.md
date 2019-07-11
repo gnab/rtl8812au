@@ -1,3 +1,6 @@
+## Changes
+2019-07-11: Updated to compile against kernel 5.2
+
 ## Realtek 802.11ac (rtl8812au)
 
 This is a fork of the Realtek 802.11ac (rtl8812au) v4.2.2 (7502.20130507)
