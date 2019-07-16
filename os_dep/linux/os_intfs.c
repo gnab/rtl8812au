@@ -1009,14 +1009,24 @@ unsigned int rtw_classify8021d(struct sk_buff *skb)
 	return dscp >> 5;
 }
 
+#if (LINUX_VERSION_CODE>=KERNEL_VERSION(4,19,0))
+static u16 rtw_select_queue(struct net_device *dev, struct sk_buff *skb,
+                            struct net_device *sb_dev,
+                            select_queue_fallback_t fallback)
+
+#else
 static u16 rtw_select_queue(struct net_device *dev, struct sk_buff *skb
+
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 13, 0))
 			    , void *unused
 #endif
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 14, 0))
 			    , select_queue_fallback_t fallback
 #endif
-){
+)
+#endif
+
+{
 	_adapter	*padapter = rtw_netdev_priv(dev);
 	struct mlme_priv *pmlmepriv = &padapter->mlmepriv;
 
