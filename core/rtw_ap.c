@@ -2069,6 +2069,7 @@ static int rtw_ap_set_key(_adapter *padapter, u8 *key, u8 alg, int keyid, u8 set
 		case _TKIP_WTMIC_:		
 		case _AES_:
 			keylen = 16;		
+			break;
 		default:
 			keylen = 16;		
 	}

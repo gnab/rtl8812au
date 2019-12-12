@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "`which iwconfig`" = "" ] ; then 
-	echo "WARNING:Wireless tool not exist!"
+	echo "WARNING:Wireless tool (iwconfig) not exist!"
 	echo "        Please install it!"
 	exit
 else
@@ -16,5 +16,3 @@ else
 
 	fi
 fi
-
-
