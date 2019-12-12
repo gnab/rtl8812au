@@ -257,6 +257,7 @@ static struct usb_device_id rtw_usb_id_tbl[] ={
 	{USB_DEVICE(USB_VENDER_ID_REALTEK, 0x881C),.driver_info = RTL8812},/* Default ID */
 	/*=== Customer ID ===*/
 	{USB_DEVICE(0x050D, 0x1106),.driver_info = RTL8812}, /* Belkin - sercomm */
+	{USB_DEVICE(0x2604, 0x0012),.driver_info = RTL8812}, /* Tenda - U12 */
 	{USB_DEVICE(0x050D, 0x1109),.driver_info = RTL8812}, /* Belkin F9L1109 - SerComm */
 	{USB_DEVICE(0x2001, 0x330E),.driver_info = RTL8812}, /* D-Link - ALPHA */
 	{USB_DEVICE(0x7392, 0xA822),.driver_info = RTL8812}, /* Edimax - Edimax */
@@ -280,6 +281,7 @@ static struct usb_device_id rtw_usb_id_tbl[] ={
 	{USB_DEVICE(0x2357, 0x0103),.driver_info = RTL8812}, /* TP-Link - Archer T4UH(US), AC1200 */
 	{USB_DEVICE(0x2357, 0x010d),.driver_info = RTL8812}, /* TP-Link - Archer T4U, AC1300 */
 	{USB_DEVICE(0x2357, 0x010e),.driver_info = RTL8812}, /* TP-Link - Archer T4UH, AC1300 */
+	{USB_DEVICE(0x2357, 0x0122),.driver_info = RTL8812}, /* TP-Link - Archer T4UHP, AC1300 */
 	{USB_DEVICE(0x0411, 0x025d),.driver_info = RTL8812}, /* Buffalo - WI-U3-866D */
 	{USB_DEVICE(0x0bda, 0x8812),.driver_info = RTL8812}, /* Netis WF2190 */
 	{USB_DEVICE(0x2604, 0x0012),.driver_info = RTL8812}, /* Tenda U12 */
@@ -303,6 +305,7 @@ static struct usb_device_id rtw_usb_id_tbl[] ={
 	{USB_DEVICE(0x0BDA, 0xA811),.driver_info = RTL8821}, /* GMYLE - AC450 */
 	{USB_DEVICE(0x2001, 0x3318),.driver_info = RTL8821}, /* D-Link - DWA-172 */
 	{USB_DEVICE(0x3823, 0x6249),.driver_info = RTL8821}, /* Obihai - OBiWiFi */
+	{USB_DEVICE(0x0bda, 0x0823),.driver_info = RTL8821}, /* I-O DATA - WNPU583B */
 #endif
 
 #ifdef CONFIG_RTL8192E

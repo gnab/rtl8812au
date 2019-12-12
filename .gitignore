@@ -1,0 +1,9 @@
+
+*.o
+*.o.cmd
+*.ko
+*.ko.cmd
+Module.symvers
+modules.order
+*.mod
+8812au.mod.c

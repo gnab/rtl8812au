@@ -1017,11 +1017,15 @@ static u16 rtw_select_queue(struct net_device *dev, struct sk_buff *skb,
 #else
 
 static u16 rtw_select_queue(struct net_device *dev, struct sk_buff *skb
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 13, 0))
-			    , void *unused
-#endif
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 14, 0))
-			    , select_queue_fallback_t fallback
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 13, 0)
+  #if LINUX_VERSION_CODE < KERNEL_VERSION(4, 19, 0)
+	  , void *accel_priv
+  #else
+    , struct net_device *sb_dev
+  #endif
+  #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 14, 0) && LINUX_VERSION_CODE < KERNEL_VERSION(5, 2, 0))
+	  , select_queue_fallback_t fallback
+  #endif
 #endif
 			    
 #endif
