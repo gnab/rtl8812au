@@ -709,7 +709,11 @@ void mgt_dispatcher(_adapter *padapter, union recv_frame *precv_frame)
 				ptable->func = &OnAuth;
 			else
 				ptable->func = &OnAuthClient;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 4, 0)
 			__attribute__ ((fallthrough));
+#else
+			__attribute__ ((__fallthrough__));
+#endif
 		case WIFI_ASSOCREQ:
 		case WIFI_REASSOCREQ:
 			_mgt_dispatcher(padapter, ptable, precv_frame);	
