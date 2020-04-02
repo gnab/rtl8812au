@@ -300,6 +300,7 @@ static struct usb_device_id rtw_usb_id_tbl[] ={
 	{USB_DEVICE(0x0846, 0x9052),.driver_info = RTL8821}, /* Netgear - A6100 */
 	{USB_DEVICE(0x2019, 0xAB32),.driver_info = RTL8821}, /* Planex - GW-450S */
 	{USB_DEVICE(0x0411, 0x0242),.driver_info = RTL8821}, /* BUFFALO - Edimax */
+	{USB_DEVICE(0x0411, 0x029B),.driver_info = RTL8821}, /* BUFFALO - WI-U2-433DHP */
 	{USB_DEVICE(0x056E, 0x4007),.driver_info = RTL8821}, /* ELECOM - WDC-433DU2H */
 	{USB_DEVICE(0x04BB, 0x0953),.driver_info = RTL8821}, /* I-O DATA - WN-AC433UA */
 	{USB_DEVICE(0x0BDA, 0xA811),.driver_info = RTL8821}, /* GMYLE - AC450 */
