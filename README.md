@@ -1,3 +1,16 @@
+## Note
+This is a fork of https://github.com/gnab/rtl8812au and just documenting how it also works for TP-Link Archer T4U V1
+
+lsusb output
+```
+Bus 002 Device 003: ID 2357:0101 TP-Link RTL8812AU Archer T4U 802.11ac
+```
+
+| OS | Kernel | Status |
+| ------------------ | -------------- | ------- |
+| Debian Buster 10.3 | 4.19.0-8-amd64 | &check; |
+
+
 ## Changes
 2019-07-11: Updated to compile against kernel 5.2
 
