@@ -58,14 +58,14 @@ Automatically rebuilds and installs on kernel updates. DKMS is in official sourc
 $ sudo apt-get install build-essential dkms 
 ```
 
-The driver source must be copied to /usr/src/8812au-4.2.2
+The driver source must be copied to /usr/src/8812au-4.2.3
 
 Then add it to DKMS:
 
 ```sh
-$ sudo dkms add -m 8812au -v 4.2.2
-$ sudo dkms build -m 8812au -v 4.2.2
-$ sudo dkms install -m 8812au -v 4.2.2
+$ sudo dkms add -m 8812au -v 4.2.3
+$ sudo dkms build -m 8812au -v 4.2.3
+$ sudo dkms install -m 8812au -v 4.2.3
 ```
 
 Check with:
@@ -78,7 +78,7 @@ $ echo 8812au | sudo tee -a /etc/modules
 ```
 Eventually remove from DKMS with:
 ```sh
-$ sudo dkms remove -m 8812au -v 4.2.2 --all
+$ sudo dkms remove -m 8812au -v 4.2.3 --all
 ```
 
 ### References
