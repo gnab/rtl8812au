@@ -191,6 +191,8 @@ struct security_priv
 	u8 bWepDefaultKeyIdxSet;
 };
 
+/* fix compilation for 5.8 kernel to avoid redefinition of struct */
+#define sha256_state sha256_state_rtl8812
 struct sha256_state {
 	u64 length;
 	u32 state[8], curlen;
