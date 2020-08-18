@@ -308,6 +308,7 @@ static struct usb_device_id rtw_usb_id_tbl[] ={
 	{USB_DEVICE(0x2001, 0x3318),.driver_info = RTL8821}, /* D-Link - DWA-172 */
 	{USB_DEVICE(0x3823, 0x6249),.driver_info = RTL8821}, /* Obihai - OBiWiFi */
 	{USB_DEVICE(0x0bda, 0x0823),.driver_info = RTL8821}, /* I-O DATA - WNPU583B */
+	{USB_DEVICE(0x2357, 0x011e),.driver_info = RTL8821}, /* TP-Link - Archer T2U Nano, AC600 */
 #endif
 
 #ifdef CONFIG_RTL8192E
