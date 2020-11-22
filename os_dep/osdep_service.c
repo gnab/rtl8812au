@@ -1545,25 +1545,19 @@ static int writeFile(struct file *fp,char *buf,int len)
 * @return Linux specific error code
 */
 static int isFileReadable(char *path)
-{ 
+{
 	struct file *fp;
 	int ret = 0;
-	mm_segment_t oldfs;
 	char buf;
- 
-	fp=filp_open(path, O_RDONLY, 0); 
+
+	fp=filp_open(path, O_RDONLY, 0);
 	if(IS_ERR(fp)) {
 		ret = PTR_ERR(fp);
 	}
 	else {
-		oldfs = get_fs(); set_fs(KERNEL_DS);
-		
-		if(1!=readFile(fp, &buf, 1))
-			ret = PTR_ERR(fp);
-		
-		set_fs(oldfs);
-		filp_close(fp,NULL);
-	}	
+		ret = kernel_read(fp, &buf, 1, NULL);
+		closeFile(fp);
+	}
 	return ret;
 }
 
@@ -1584,13 +1578,11 @@ static int retriveFromFile(char *path, u8* buf, u32 sz)
 		if( 0 == (ret=openFile(&fp,path, O_RDONLY, 0)) ){
 			DBG_871X("%s openFile path:%s fp=%p\n",__FUNCTION__, path ,fp);
 
-			oldfs = get_fs(); set_fs(KERNEL_DS);
-			ret=readFile(fp, buf, sz);
-			set_fs(oldfs);
+			ret = kernel_read(fp, buf, sz, NULL);
 			closeFile(fp);
-			
+
 			DBG_871X("%s readFile, ret:%d\n",__FUNCTION__, ret);
-			
+
 		} else {
 			DBG_871X("%s openFile path:%s Fail, ret:%d\n",__FUNCTION__, path, ret);
 		}
@@ -1613,21 +1605,19 @@ static int storeToFile(char *path, u8* buf, u32 sz)
 	int ret =0;
 	mm_segment_t oldfs;
 	struct file *fp;
-	
+
 	if(path && buf) {
 		if( 0 == (ret=openFile(&fp, path, O_CREAT|O_WRONLY, 0666)) ) {
 			DBG_871X("%s openFile path:%s fp=%p\n",__FUNCTION__, path ,fp);
 
-			oldfs = get_fs(); set_fs(KERNEL_DS);
-			ret=writeFile(fp, buf, sz);
-			set_fs(oldfs);
+			ret = kernel_write(fp, buf, sz, NULL);
 			closeFile(fp);
 
 			DBG_871X("%s writeFile, ret:%d\n",__FUNCTION__, ret);
-			
+
 		} else {
 			DBG_871X("%s openFile path:%s Fail, ret:%d\n",__FUNCTION__, path, ret);
-		}	
+		}
 	} else {
 		DBG_871X("%s NULL pointer\n",__FUNCTION__);
 		ret =  -EINVAL;
