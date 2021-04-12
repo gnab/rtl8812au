@@ -90,6 +90,7 @@ CONFIG_PLATFORM_ACTIONS_ATM702X = n
 CONFIG_PLATFORM_ACTIONS_ATV5201 = n
 CONFIG_PLATFORM_PPC = n
 CONFIG_PLATFORM_MIPS64_LOONGSON = n
+CONFIG_PLATFORM_RISCV = n
 
 CONFIG_DRVEXT_MODULE = n
 
@@ -996,6 +997,14 @@ KSRC ?= /lib/modules/$(KVER)/build
 MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/
 endif
 
+ifeq ($(CONFIG_PLATFORM_RISCV), y)
+EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN
+ARCH ?= riscv
+CROSS_COMPILE ?=
+KVER ?= $(shell uname -r)
+KSRC ?= /lib/modules/$(KVER)/build
+MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/
+endif
 
 ifeq ($(CONFIG_MULTIDRV), y)	
 
