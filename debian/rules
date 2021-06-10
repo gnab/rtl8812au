@@ -1,0 +1,21 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+include /usr/share/dpkg/default.mk
+
+export DH_VERBOSE = 1
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+VERSION ?= $(shell dpkg-parsechangelog | sed -rne 's/^Version: ([0-9.]+).*$$/\1/p')
+
+%:
+	dh $@ --with dkms
+
+override_dh_auto_install:
+	dh_install -prtl8812au-dkms `ls |grep -v debian |xargs`	usr/src/8812au-$(VERSION)
+
+override_dh_dkms:
+	dh_dkms -V
+
+override_dh_auto_build:
+
