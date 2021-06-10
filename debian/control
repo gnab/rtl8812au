@@ -1,0 +1,14 @@
+Source: rtl8812au
+Section: misc
+Priority: optional
+Maintainer: zhouzilong <zhouzilong@uniontech.com>
+Build-Depends: debhelper (>= 11), dkms
+Standards-Version: 4.1.3
+Homepage: https://github.com/gnab/rtl8812au
+
+Package: rtl8812au-dkms
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, dkms
+Description: rtl8812au driver in DKMS format.
+ The rtl8812au driver provides the driver for Realtek 802.11ac (rtl8812au).
+ This package contains the DKMS files to build and install rtl8812au.
