@@ -5,7 +5,7 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-make &&
+make -j$(nproc) &&
 cp 8812au.ko /lib/modules/$(uname -r)/kernel/drivers/net/wireless &&
 depmod &&
 echo "
