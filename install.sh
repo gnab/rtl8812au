@@ -5,7 +5,11 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
+DRIV_DIR=/lib/modules/$(uname -r)/kernel/drivers/net/wireless/realtek/rtlwifi/rtl8812au
+
 make -j$(nproc) &&
+mkdir -p $DRIV_DIR &&
+xz -c 8812au.ko > $DRIV_DIR/rtl8812au.ko.xz &&
 cp 8812au.ko /lib/modules/$(uname -r)/kernel/drivers/net/wireless &&
 depmod &&
 echo "
