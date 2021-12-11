@@ -20,7 +20,7 @@ echo "
 while true; do
     read -p "Do you wish to activate the module now? (y/n)" yn
     case $yn in
-        [Yy]* ) insmod 8812au.ko && echo "***Module activated***" && break;;
+        [Yy]* ) modprobe rtl8812au && echo "***Module activated***" && break;;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no.";;
     esac
