@@ -1571,7 +1571,6 @@ static int isFileReadable(char *path)
 static int retriveFromFile(char *path, u8* buf, u32 sz)
 {
 	int ret =-1;
-	mm_segment_t oldfs;
 	struct file *fp;
 
 	if(path && buf) {
@@ -1603,7 +1602,6 @@ static int retriveFromFile(char *path, u8* buf, u32 sz)
 static int storeToFile(char *path, u8* buf, u32 sz)
 {
 	int ret =0;
-	mm_segment_t oldfs;
 	struct file *fp;
 
 	if(path && buf) {
