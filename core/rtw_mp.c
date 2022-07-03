@@ -1179,6 +1179,10 @@ exit:
 	pmptx->stop = 1;
 
 	thread_exit();
+
+#ifdef PLATFORM_LINUX
+	return 0;
+#endif
 }
 
 void fill_txdesc_for_mp(PADAPTER padapter, struct tx_desc *ptxdesc)
