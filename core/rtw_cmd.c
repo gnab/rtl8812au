@@ -554,6 +554,9 @@ _func_exit_;
 
 	thread_exit();
 
+#ifdef PLATFORM_LINUX
+	return 0;
+#endif
 }
 
 
